@@ -1,0 +1,15 @@
+{
+  "name": "rdv-medicaux-plateforme",
+  "version": "1.0.0",
+  "description": "Plateforme de prise de rdv crée pour un TP du module ALOG",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "BAZOUZI Aymen & CHAIB Oussama",
+  "license": "MIT",
+  "dependencies": {
+    "ejs-electron": "2.0.3",
+    "electron-reload": "1.5.0"
+  }
+}

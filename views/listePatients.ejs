@@ -1,0 +1,111 @@
+<%- include('./partials/header') %>
+
+<div class="ui grid">
+    <div class="sixteen wide column">
+        <div class="ui huge grey center aligned header">
+            Liste des patients
+        </div>
+    </div>
+    <div class="sixteen wide center aligned column">
+        <button class="ui green button" id="ajouterPatient">
+            <i class="icon plus"></i>
+            Ajouter un patient
+        </button>
+    </div>
+    <div class="sixteen wide center aligned column">
+        <table class="ui celled inverted table">
+            <thead>
+              <tr>
+                <th class="center aligned">Nom</th>
+                <th class="center aligned">Prénom</th>
+                <th class="center aligned">Adresse</th>
+                <th class="center aligned">Téléphone</th>
+                <th class="center aligned">Mail</th>
+                <th class="center aligned">Information médicale</th>
+                <th class="center aligned">Opérations</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th class="center aligned">Chaib</th>
+                <th class="center aligned">Oussama</th>
+                <th class="center aligned">Oran</th>
+                <th class="center aligned">+213 66 52 14 63</th>
+                <th class="center aligned">go_chaib@esi.dz</th>
+                <th class="center aligned">Hémorroïdes</th>
+                <th class="center aligned">
+                    <button class="circular ui icon red aligned button">
+                        <i class="trash icon"></i>
+                    </button>
+                </th>
+              </tr>
+              <tr>
+                <th class="center aligned">Chaib</th>
+                <th class="center aligned">Oussama</th>
+                <th class="center aligned">Oran</th>
+                <th class="center aligned">+213 66 52 14 63</th>
+                <th class="center aligned">go_chaib@esi.dz</th>
+                <th class="center aligned">Hémorroïdes</th>
+                <th class="center aligned">
+                    <button class="circular ui icon red aligned button">
+                        <i class="trash icon"></i>
+                    </button>
+                </th>
+              </tr>
+              <tr>
+                <th class="center aligned">Chaib</th>
+                <th class="center aligned">Oussama</th>
+                <th class="center aligned">Oran</th>
+                <th class="center aligned">+213 66 52 14 63</th>
+                <th class="center aligned">go_chaib@esi.dz</th>
+                <th class="center aligned">Hémorroïdes</th>
+                <th class="center aligned">
+                    <button class="circular ui icon red aligned button">
+                        <i class="trash icon"></i>
+                    </button>
+                </th>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+</div>
+
+<div class="ui inverted modal">
+    <div class="ui center aligned grey huge header">
+        Ajouter un patient
+    </div>
+    <div class="ui center aligned grey small header">
+        Saisir les informations du patient
+    </div>
+    <div class="content">
+        <form class="ui form">
+            <div class="field">
+              <label>Nom</label>
+              <input type="text" name="nom" placeholder="Nom">
+            </div>
+            <div class="field">
+              <label>Prénom</label>
+              <input type="text" name="prenom" placeholder="Prénom">
+            </div>
+            <div class="field">
+                <label>Adresse</label>
+                <input type="text" name="adresse" placeholder="Adresse">
+            </div>
+            <div class="field">
+                <label>Téléphone</label>
+                <input type="text" name="telephone" placeholder="Téléphone">
+            </div>
+            <div class="field">
+                <label>Mail</label>
+                <input type="email" name="mail" placeholder="Mail">
+            </div>
+            <div class="field">
+                <label>Information médicale</label>
+                <input type="text" name="informationMedicale" placeholder="Information médicale">
+            </div>
+            <button class="ui green button" type="submit">Ajouter</button>
+        </form>
+    </div>
+</div>
+
+<%- include('./partials/footer') %>
