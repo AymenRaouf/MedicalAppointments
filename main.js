@@ -31,3 +31,24 @@ const mainMenuTemplate = [
         
     }
 ];
+/*
+const path = require('path');
+const express = require('express');
+const ejs = require('ejs');
+const bodyParser = require('body-parser');
+const sqlite3 = require('sqlite3');
+const app = express();
+const port = 4300;
+ 
+let db = new sqlite3.Database('models/rdv.db')
+
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+require('./routes')(app, db);
+ 
+app.listen(port, () => {
+   console.log('Server is running at port 4300');
+});
+*/
