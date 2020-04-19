@@ -12,6 +12,12 @@ $("#ajouterPatient").click(function(e){
         .modal("show");
 });
 
+//edit modal open on click
+$(".button.edit").click(function(e){
+    $(".ui.modal.edit")
+        .modal("show");
+});
+
 //form validation for patient
 $('.ui.form')
   .form({

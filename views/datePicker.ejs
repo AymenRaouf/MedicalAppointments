@@ -1,0 +1,29 @@
+<%- include('./partials/header') %>
+
+
+<div class="ui grid">
+    <div class="sixteen wide column">
+        <div class="ui center aligned huge grey header">
+            Liste des rendez-vous
+        </div>
+        <div class="ui center aligned small grey header">
+            Veuillez choisir la date des pour laquelle vous voulez afficher les rendez-vous
+        </div>
+        <form class="ui form">
+            <div class="field">
+                <label>Date des rendez-vous</label>
+                <input type="date" name="date">
+            </div>
+            <div class="left aligned field">
+                <button class="ui green button" id="chercherRdv">
+                    <i class="icon search"></i>
+                    Trouver rendez-vous
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<%- include('./partials/footer') %>
