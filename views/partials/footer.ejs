@@ -1,6 +1,41 @@
     </div>
-    <script src="../public/libs/jquery-3.1.1.min.js"></script>
-    <script src="../public/libs/Semantic-UI-CSS-master/semantic.min.js"></script>
-    <script src="../public/script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <script>
+        //sidebar opening
+        $("#menu-icon").click(function(e){
+            e.preventDefault();
+            $('.ui.sidebar')
+                .sidebar('setting', 'transition', 'overlay')
+                .sidebar('toggle');
+        });
+
+        //modal open on click
+        $("#ajouterPatient").click(function(e){
+            $(".ui.modal")
+                .modal("show");
+        });
+
+        //edit modal open on click
+        $(".button.edit").click(function(e){
+            $(".ui.modal.edit")
+                .modal("show");
+        });
+
+        //form validation for patient
+        $('.ui.form')
+        .form({
+            fields: {
+            nom     : 'empty',
+            prenom   : 'empty',
+            adresse : 'empty',
+            mail : 'empty',
+            telephone   : ['number', 'empty'],
+            informationMedicale : 'empty'
+            }
+        })
+        ;
+
+    </script>
 </body>
 </html>

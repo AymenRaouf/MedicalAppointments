@@ -17,32 +17,48 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th class="center aligned">30/04/2020 12:30</th>
-                <th class="center aligned">Prélèvement</th>
-                <th class="center aligned">Chaib</th>
-                <th class="center aligned">
-                    <button class="circular ui icon red aligned button">
-                        <i class="trash icon"></i>
-                    </button>
-                    <button class="circular ui icon primary aligned button">
-                        <i class="edit icon"></i>
-                    </button>
-                </th>
-              </tr>
-              <tr>
-                <th class="center aligned">30/04/2020 12:30</th>
-                <th class="center aligned">Prélèvement</th>
-                <th class="center aligned">Chaib</th>
-                <th class="center aligned">
-                    <button class="circular ui icon red aligned button">
-                        <i class="trash icon"></i>
-                    </button>
-                    <button class="circular ui icon primary aligned button">
-                        <i class="edit icon"></i>
-                    </button>
-                </th>
-              </tr>
+              <%results.forEach(function(result){%>
+                <tr>
+                  <th class="center aligned"><%=result.date%></th>
+                  <th class="center aligned"><%=result.objet%></th>
+                  <th class="center aligned"><%=result.patient.nom%></th>
+                  <th class="center aligned">
+                      <button class="circular ui icon red aligned button">
+                          <i class="trash icon"></i>
+                      </button>
+                      <button class="circular ui icon primary aligned button"
+                      onclick="$('.ui.modal.<%=result.id%>')
+                      .modal('show');">
+                          <i class="edit icon"></i>
+                      </button>
+                  </th>
+                  </tr>
+                  <div class="ui modal <%=result.id%>">
+                    <div class="ui center aligned grey huge header">
+                        Ajouter un rendez-vous
+                    </div>
+                    <div class="ui center aligned grey small header">
+                        Saisir les informations du rendez-vous
+                    </div>
+                    <div class="content">
+                        <form class="ui form" method="POST" action="/rdv/<%=result.id%>?_method=PUT">
+                            <div class="field">
+                              <label>Date et heure</label>
+                              <input type="datetime-local" name="date">
+                            </div>
+                            <div class="field">
+                                <label>Objet</label>
+                                <input type="text" name="objet" placeholder="Objet">
+                            </div>  
+                            <div class="center aligned field">
+                                <button class="ui green button" type="submit">
+                                    Ajouter
+                                </button>
+                            </div>          
+                        </form>
+                    </div>
+                </div>
+              <%})%>
             </tbody>
           </table>
     </div>

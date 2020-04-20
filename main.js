@@ -6,7 +6,8 @@ var electron = require("electron"),
     express = require("express"),
     path = require("path"),
     bodyParser = require("body-parser"),
-    server = express();
+    server = express(),
+    methodOverride = require("method-override");
 
 require('electron-reload')(__dirname);
 
@@ -28,7 +29,6 @@ app.on('ready', function(){
     // const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
     // //Insert menu
     // Menu.setApplicationMenu(mainMenu);
-
 });
 
 const mainMenuTemplate = [
@@ -37,28 +37,15 @@ const mainMenuTemplate = [
     }
 ];
 
-
-// Patient
-//     .create({
-//         nom: "Chaib",
-//         prenom: "Oussama",
-//         adresse: "Oran",
-//         telephone: "+213 25 25 25",
-//         mail: "ga_chaib@esi.dz",
-//         information: "Rien"
-//     })
-//     .then((u)=>{
-//         console.log(u)
-//     })
-
 // server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
+server.use(methodOverride("_method"));
 
 
 //routing
 server.use(require("./routes/rdvRoutes"));//Rendez-vous routes
 server.use(require("./routes/patientRoutes"));//Patient routes
-
+server.use(require("./routes/navigationRoutes"));//naviger entre les ecrans
 
 var port = process.env.PORT || 5000;
 server.listen(port, () => {

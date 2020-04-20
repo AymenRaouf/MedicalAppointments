@@ -2,13 +2,15 @@ var express = require("express"),
     rdvRouter = express.Router();
 
 
-var {getRdvs, getRdv, addRdv, updateRdv, deleteRdv} = require("../controllers/rdvController");
+var {getRdvs, getRdv, addRdv, updateRdv, deleteRdv, getRdvsPatient} = require("../controllers/rdvController");
 
 rdvRouter.get("/rdv", getRdvs);
 
+rdvRouter.get("/patient/:id/rdv", getRdvsPatient);
+
 rdvRouter.get("/rdv/:id", getRdv);
 
-rdvRouter.post("/rdv", addRdv);
+rdvRouter.post("/rdv/:id", addRdv);
 
 rdvRouter.put("/rdv/:id", updateRdv);
 

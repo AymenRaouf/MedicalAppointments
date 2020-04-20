@@ -4,8 +4,7 @@
 <div class="ui grid">
     <div class="sixteen wide column">
         <div class="ui center aligned huge grey header">
-            Liste des rendez-vous du patient 
-            Chaib Oussama
+            Liste des rendez-vous du patient
         </div>
     </div>
     <div class="sixteen wide center aligned column">
@@ -20,78 +19,29 @@
               <tr>
                 <th class="center aligned">Date et heure</th>
                 <th class="center aligned">Objet</th>
+                <th class="center aligned">Nom</th>
                 <th class="center aligned">Opérations</th>
               </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th class="center aligned">30/04/2020 12:30</th>
-                    <th class="center aligned">Prélèvement</th>
-                    <th class="center aligned">
-                        <button class="circular ui icon red aligned button">
-                            <i class="trash icon"></i>
-                        </button>
-                        <button class="circular ui icon primary aligned button edit">
-                            <i class="edit icon"></i>
-                        </button>
-                        <div class="ui modal edit">
-                            <div class="ui center aligned grey small header">
-                                Saisir les informations du rendez-vous
-                            </div>
-                            <div class="content">
-                                <form class="ui form">
-                                    <div class="field">
-                                    <label>Date et heure</label>
-                                    <input type="date" name="date">
-                                    </div>
-                                    <div class="field">
-                                        <label>Objet</label>
-                                        <input type="text" name="objet" placeholder="Objet">
-                                    </div>  
-                                    <div class="center aligned field">
-                                        <button class="ui green button" type="submit">
-                                            Modifier
-                                        </button>
-                                    </div>          
-                                </form>
-                            </div>
-                        </div>
-                    </th>
-                  </tr>
-              <tr>
-                <th class="center aligned">30/04/2020 12:30</th>
-                <th class="center aligned">Prélèvement</th>
-                <th class="center aligned">
-                    <button class="circular ui icon red aligned button">
-                        <i class="trash icon"></i>
-                    </button>
-                    <button class="circular ui icon primary aligned button edit">
-                        <i class="edit icon"></i>
-                    </button>
-                    <div class="ui modal edit">
-                        <div class="ui center aligned grey small header">
-                            Saisir les informations du rendez-vous
-                        </div>
-                        <div class="content">
-                            <form class="ui form">
-                                <div class="field">
-                                <label>Date et heure</label>
-                                <input type="date" name="date">
-                                </div>
-                                <div class="field">
-                                    <label>Objet</label>
-                                    <input type="text" name="objet" placeholder="Objet">
-                                </div>  
-                                <div class="center aligned field">
-                                    <button class="ui green button" type="submit">
-                                        Modifier
-                                    </button>
-                                </div>          
-                            </form>
-                        </div>
-                    </div>
-                </th>
-              </tr>
+                <%results.forEach(function(result){%>
+                    <tr>
+                      <th class="center aligned"><%=result.date%></th>
+                      <th class="center aligned"><%=result.objet%></th>
+                      <th class="center aligned"><%=result.patient.nom%></th>
+
+                      <th class="center aligned">
+                        <form action="/rdv/<%=result.id%>?_method=DELETE" method="post">
+                            <button class="circular ui icon red aligned button">
+                                <i class="trash icon"></i>
+                            </button>
+                            <button class="circular ui icon primary aligned button">
+                                <i class="edit icon"></i>
+                            </button>
+                        </form>                            
+                      </th>
+                      </tr>
+                  <%})%>
             </tbody>
           </table>
     </div>
@@ -106,7 +56,7 @@
         Saisir les informations du rendez-vous
     </div>
     <div class="content">
-        <form class="ui form">
+        <form class="ui form" method="POST" action="/rdv/<%=id%>">
             <div class="field">
               <label>Date et heure</label>
               <input type="datetime-local" name="date">

@@ -4,14 +4,12 @@ const addRdv = function(req,res){
     var rdv = {
         date : req.body.date,
         objet : req.body.objet,
-        patientId: req.body.patientId
+        patientId: req.params.id
     }
     Rdv
         .create(rdv)
         .then((result) => {
-            console.log(result);
-            res.send(result)
-            //here show patient list of rdvs
+            res.redirect("/patient/"+req.params.id+"/rdv")
         }).catch((err) => {
             if(err)
                 console.error("Unable to add rendez-vous ", err)
@@ -25,8 +23,26 @@ const getRdvs = function(req,res){
                 model:Patient
                 }]
             })
-        .then((result) => {
-            res.send(result);
+        .then((results) => {
+            res.render("rdvListe.ejs", {results: results})
+        }).catch((err) => {
+            if(err)
+                console.error("Unable to find rendez-vous ", err)
+        });
+}
+
+const getRdvsPatient = function(req,res){
+    Rdv
+        .findAll({
+            where:{
+                patientId: req.params.id
+            },
+            include:[{
+                model:Patient
+                }]
+            })
+        .then((results) => {
+            res.render("rdvPatient.ejs", {results: results, id: req.params.id})
         }).catch((err) => {
             if(err)
                 console.error("Unable to find rendez-vous ", err)
@@ -68,7 +84,7 @@ const updateRdv = function(req,res){
             }
         )
         .then((result) => {
-            res.send(result);
+            res.redirect("/rdv");
         }).catch((err) => {
             if(err)
                 console.error("Unable to update rendez-vous ", err)
@@ -85,7 +101,7 @@ const deleteRdv = function(req,res){
                 }
             })
         .then((result) => {
-            res.send("Done")
+            res.redirect("/rdv");
         }).catch((err) => {
             if(err)
                 console.error("Unable to destroy rendez-vous ", err)
@@ -98,5 +114,6 @@ module.exports = {
     getRdv,
     getRdvs,
     updateRdv,
-    deleteRdv
+    deleteRdv,
+    getRdvsPatient
 }

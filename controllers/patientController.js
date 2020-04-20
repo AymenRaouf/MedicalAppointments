@@ -7,14 +7,12 @@ const addPatient = function(req,res){
         adresse: req.body.adresse,
         telephone: req.body.telephone,
         mail: req.body.mail,
-        information: req.body.information
+        information: req.body.informationMedicale
     }
     Patient
         .create(patient)
         .then((result) => {
-            console.log(result);
-            res.send(result)
-            //here show patient list of rdvs
+            res.redirect("/patient");
         }).catch((err) => {
             if(err)
                 console.error("Unable to add patient ", err)
@@ -24,8 +22,8 @@ const addPatient = function(req,res){
 const getPatients = function(req,res){
     Patient
         .findAll()
-        .then((result) => {
-            res.render("../views/listePatients.ejs");
+        .then((results) => {
+            res.render("listePatients.ejs", {results: results});
         }).catch((err) => {
             if(err)
                 console.error("Unable to find patients ", err)
@@ -84,7 +82,7 @@ const deletePatient = function(req,res){
                 }
             })
         .then((result) => {
-            res.send("Done")
+            res.redirect("/patient");
         }).catch((err) => {
             if(err)
                 console.error("Unable to destroy patient ", err)

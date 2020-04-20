@@ -26,54 +26,27 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th class="center aligned">Chaib</th>
-                <th class="center aligned">Oussama</th>
-                <th class="center aligned">Oran</th>
-                <th class="center aligned">+213 66 52 14 63</th>
-                <th class="center aligned">go_chaib@esi.dz</th>
-                <th class="center aligned">Hémorroïdes</th>
-                <th class="center aligned">
-                    <button class="circular ui icon red aligned button">
-                        <i class="trash icon"></i>
-                    </button>
-                    <a class="circular ui icon blue button">
-                        <i class="angle double right icon"></i>
-                    </a>
-                </th>
-              </tr>
-              <tr>
-                <th class="center aligned">Chaib</th>
-                <th class="center aligned">Oussama</th>
-                <th class="center aligned">Oran</th>
-                <th class="center aligned">+213 66 52 14 63</th>
-                <th class="center aligned">go_chaib@esi.dz</th>
-                <th class="center aligned">Hémorroïdes</th>
-                <th class="center aligned">
-                    <button class="circular ui icon red aligned button">
-                        <i class="trash icon"></i>
-                    </button>
-                    <a class="circular ui icon blue button">
-                        <i class="angle double right icon"></i>
-                    </a>
-                </th>
-              </tr>
-              <tr>
-                <th class="center aligned">Chaib</th>
-                <th class="center aligned">Oussama</th>
-                <th class="center aligned">Oran</th>
-                <th class="center aligned">+213 66 52 14 63</th>
-                <th class="center aligned">go_chaib@esi.dz</th>
-                <th class="center aligned">Hémorroïdes</th>
-                <th class="center aligned">
-                    <button class="circular ui icon red aligned button">
-                        <i class="trash icon"></i>
-                    </button>
-                    <a class="circular ui icon blue button">
-                        <i class="angle double right icon"></i>
-                    </a>
-                </th>
-              </tr>
+                <%results.forEach(function(result){%>
+                    <tr>
+                        <th class="center aligned"><%=result.id%></th>
+                        <th class="center aligned"><%=result.prenom%></th>
+                        <th class="center aligned"><%=result.adresse%></th>
+                        <th class="center aligned"><%=result.telephone%></th>
+                        <th class="center aligned"><%=result.mail%></th>
+                        <th class="center aligned"><%=result.information%></th>
+                        <th class="center aligned">
+                            <form action="/patient/<%=result.id%>?_method=DELETE" method="post">
+                                <button class="circular ui icon red aligned button">
+                                    <i class="trash icon"></i>
+                                </button>
+                                <a class="circular ui icon blue button"
+                                    href="http://localhost:5000/patient/<%=result.id%>/rdv">
+                                    <i class="angle double right icon"></i>
+                                </a>
+                            </form>                            
+                        </th>
+                      </tr>
+                <%})%>
             </tbody>
           </table>
     </div>
@@ -87,7 +60,7 @@
         Saisir les informations du patient
     </div>
     <div class="content">
-        <form class="ui form">
+        <form class="ui form" method="POST" action="/patient">
             <div class="field">
               <label>Nom</label>
               <input type="text" name="nom" placeholder="Nom">
