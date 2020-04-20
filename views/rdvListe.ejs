@@ -13,25 +13,39 @@
               <tr>
                 <th class="center aligned">Date et heure</th>
                 <th class="center aligned">Objet</th>
-                <th class="center aligned">Opérations</th>
+                <th class="center aligned">Nom</th>
+                <th class="center aligned">Supprimer</th>
+                <th class="center aligned">Modifier</th>
+                <th class="center aligned">Imprimer</th>
               </tr>
             </thead>
             <tbody>
               <%results.forEach(function(result){%>
                 <tr>
-                  <th class="center aligned"><%=result.date%></th>
+                  <th class="center aligned"><%=result.date.toISOString().split('T')[0]%></th>
                   <th class="center aligned"><%=result.objet%></th>
                   <th class="center aligned"><%=result.patient.nom%></th>
                   <th class="center aligned">
+                    <form action="/rdv/<%=result.id%>?_method=DELETE" method="post">
                       <button class="circular ui icon red aligned button">
-                          <i class="trash icon"></i>
+                        <i class="trash icon"></i>
                       </button>
-                      <button class="circular ui icon primary aligned button"
+                    </form>  
+                  </th>
+                  <th class="center aligned">
+                    <button class="circular ui icon primary aligned button"
                       onclick="$('.ui.modal.<%=result.id%>')
                       .modal('show');">
                           <i class="edit icon"></i>
-                      </button>
+                    </button>
                   </th>
+                  <th class="center aligned">
+                    <a class="circular ui icon aligned button"
+                      href="http://localhost:5000/rdv/<%=result.id%>/
+                      <%=result.date%>/<%=result.objet%>">
+                      <i class="print icon"></i>
+                    </a>
+                  </th>  
                   </tr>
                   <div class="ui modal <%=result.id%>">
                     <div class="ui center aligned grey huge header">

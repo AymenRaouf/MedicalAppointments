@@ -49,6 +49,53 @@ const getRdvsPatient = function(req,res){
         });
 }
 
+const getRdvsToday = function(req,res){
+    today = new Date();
+    results = [];
+    Rdv
+        .findAll({
+            include:[{
+                model:Patient
+                }]
+            })
+        .then((preresults) => {
+            preresults.forEach(result => {
+                if(today.toDateString() == result.date.toDateString()){
+                        results.push(result);
+                    }
+            });
+            res.render("rdvListe.ejs", {results: results})
+        }).catch((err) => {
+            if(err)
+                console.error("Unable to find rendez-vous ", err)
+        });
+}
+
+const getRdvsDay = function(req,res){
+    day = req.body.date
+    console.log(day);
+    results = [];
+    Rdv
+        .findAll({
+            include:[{
+                model:Patient
+                }]
+            })
+        .then((preresults) => {
+            preresults.forEach(result => {
+                if(day == result.date.toISOString().split('T')[0]){
+                        results.push(result);
+                    }
+                    console.log(result.date.toDateString())
+
+            });
+            res.render("rdvListe.ejs", {results: results})
+        }).catch((err) => {
+            if(err)
+                console.error("Unable to find rendez-vous ", err)
+        });
+}
+
 const getRdv = function(req,res){
     var rdvId = req.params.id;
     Rdv
@@ -115,5 +162,7 @@ module.exports = {
     getRdvs,
     updateRdv,
     deleteRdv,
-    getRdvsPatient
+    getRdvsPatient,
+    getRdvsToday,
+    getRdvsDay
 }
