@@ -1,52 +1,101 @@
-function addClient(req, res, db){
-    // validateRequest(req, res);
-     insertClient(req.body, res, db);
- }
- 
- function insertClient(rdv, res, db){
-     var nom = rdv.nom;
-     var prenom = rdv.prenom;
-     var adresse = rdv.adresse;
-     var email = rdv.email;
-     var num_tel = rdv.num_tel;
-     var information_medicale = rdv.information_medicale;
- 
-     var sql = `insert into rdv (nom, prenom, adresse, email, num_tel, information_medicale) 
-             VALUES 
-             (?, ?, ?, ?, ?, ?);`;
- 
-     var values = [nom, prenom, adresse, email, num_tel, information_medicale];
- 
-     db.serialize(function () {
-         db.run(sql, values, function (err) {
-             if (err){
-                 console.error(err);
-                 res.status(500).send(err);
-             }
-                 
-             else
-                 res.send();
-         });
-     });
- }
-/*function validateRequest(req, res) {
-    var fs = require('fs');
-    var schema = JSON.parse(fs.readFileSync('app/data/rdv_schema.json', 'utf8'));
+const {Patient} = require("../models/index");
 
-    var JaySchema = require('jayschema');
-    var js = new JaySchema();
-    var instance = req.body;
-
-    js.validate(instance, schema, function (errs) {
-        if (errs) {
-            console.error(errs);
-            res.status(400).send(errs);
-        }
-    });
-
-    if (req.body.id) {
-        res.status(400).send("ID cannot be submmited");
+const addPatient = function(req,res){
+    var patient = {
+        nom : req.body.nom,
+        prenom : req.body.prenom,
+        adresse: req.body.adresse,
+        telephone: req.body.telephone,
+        mail: req.body.mail,
+        information: req.body.information
     }
-}*/
+    Patient
+        .create(patient)
+        .then((result) => {
+            console.log(result);
+            res.send(result)
+            //here show patient list of rdvs
+        }).catch((err) => {
+            if(err)
+                console.error("Unable to add patient ", err)
+        });
+}
 
-module.exports = {addClient};
+const getPatients = function(req,res){
+    Patient
+        .findAll()
+        .then((result) => {
+            res.render("../views/listePatients.ejs");
+        }).catch((err) => {
+            if(err)
+                console.error("Unable to find patients ", err)
+        });
+}
+
+const getPatient = function(req,res){
+    var patientId = req.params.id;
+    Patient
+        .findAll({
+            where : {
+                id : patientId
+            }
+        })
+        .then((result) => {
+            res.send(result[0]);
+        }).catch((err) => {
+            if(err)
+                console.error("Unable to find patient ", err)
+        });
+}
+
+const updatePatient = function(req,res){
+    var patientId = req.params.id,
+        patient = {
+            nom : req.body.nom,
+            prenom : req.body.prenom,
+            adresse: req.body.adresse,
+            telephone: req.body.telephone,
+            mail: req.body.mail,
+            information: req.body.information
+    }
+    Patient
+        .update(patient,
+            {
+                where: {
+                    id: patientId
+                }
+            }
+        )
+        .then((result) => {
+            res.send(result);
+        }).catch((err) => {
+            if(err)
+                console.error("Unable to update patient ", err)
+        });
+}
+
+
+const deletePatient = function(req,res){
+    var patientId = req.params.id;
+    Patient
+        .destroy({
+            where : {
+                id : patientId
+                }
+            })
+        .then((result) => {
+            res.send("Done")
+        }).catch((err) => {
+            if(err)
+                console.error("Unable to destroy patient ", err)
+        });
+}
+
+
+module.exports = {
+    addPatient,
+    getPatient,
+    getPatients,
+    updatePatient,
+    deletePatient
+}

@@ -1,7 +1,12 @@
 var electron = require("electron"),
+    dotenv = require('dotenv'),
     url = require("url"),
     path = require("path"),
-    ejse = require("ejs-electron");
+    ejse = require("ejs-electron"),
+    express = require("express"),
+    path = require("path"),
+    bodyParser = require("body-parser"),
+    server = express();
 
 require('electron-reload')(__dirname);
 
@@ -9,11 +14,11 @@ const {app, BrowserWindow, Menu} = electron;
 
 let mainWindow;
 
-//listen for app to be ready
+//wait for the app to be ready
 app.on('ready', function(){
     //create Window
     mainWindow = new BrowserWindow({});
-    //load html into window
+    //load ejs into window
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, 'views/mainWindow.ejs'),
         protocol: 'file:',
@@ -31,24 +36,31 @@ const mainMenuTemplate = [
         
     }
 ];
-/*
-const path = require('path');
-const express = require('express');
-const ejs = require('ejs');
-const bodyParser = require('body-parser');
-const sqlite3 = require('sqlite3');
-const app = express();
-const port = 4300;
- 
-let db = new sqlite3.Database('models/rdv.db')
 
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+// Patient
+//     .create({
+//         nom: "Chaib",
+//         prenom: "Oussama",
+//         adresse: "Oran",
+//         telephone: "+213 25 25 25",
+//         mail: "ga_chaib@esi.dz",
+//         information: "Rien"
+//     })
+//     .then((u)=>{
+//         console.log(u)
+//     })
 
-require('./routes')(app, db);
- 
-app.listen(port, () => {
-   console.log('Server is running at port 4300');
+// server.use(bodyParser.json());
+server.use(bodyParser.urlencoded({ extended: true }));
+
+
+//routing
+server.use(require("./routes/rdvRoutes"));//Rendez-vous routes
+server.use(require("./routes/patientRoutes"));//Patient routes
+
+
+var port = process.env.PORT || 5000;
+server.listen(port, () => {
+   console.log('Server is running at port', port);
 });
-*/

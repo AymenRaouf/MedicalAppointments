@@ -1,129 +1,102 @@
-function addRdvs(req, res, db){
-    for (var rdv of req.body) {
-        insertRdv(rdv, res, db);
+const {Rdv, Patient} = require("../models/index");
+
+const addRdv = function(req,res){
+    var rdv = {
+        date : req.body.date,
+        objet : req.body.objet,
+        patientId: req.body.patientId
     }
-}
-
-function addRdv(req, res, db){
-   // validateRequest(req, res);
-    insertRdv(req.body, res, db);
-}
-
-function insertRdv(rdv, res, db){
-    var client_id = rdv.client_id;
-    var client_name = rdv.client_name;
-    var date = rdv.date;
-    var heure = rdv.heure;
-    var objet = rdv.objet;
-
-    var sql = `insert into rdv (client_id, client_name, date, heure, objet) 
-            VALUES 
-            (?, ?, ?, ?, ?);`;
-
-    var values = [client_id, client_name, date, heure, objet];
-
-    db.serialize(function () {
-        db.run(sql, values, function (err) {
-            if (err){
-                console.error(err);
-                res.status(500).send(err);
-            }
-                
-            else
-                res.send();
+    Rdv
+        .create(rdv)
+        .then((result) => {
+            console.log(result);
+            res.send(result)
+            //here show patient list of rdvs
+        }).catch((err) => {
+            if(err)
+                console.error("Unable to add rendez-vous ", err)
         });
-    });
-}
-/*function deleteRdvs(req, res, db){
-    for (var rdv of req.body) {
-        updateRdv(rdv, res, db);
-    }
-}*/
-
-function deleteRdv(req, res, db){
-    updateRdv(req.body, res, db);
 }
 
-function updateRdv(rdv, res, db){
-    var rdv_id = rdv.rdv_id;
+const getRdvs = function(req,res){
+    Rdv
+        .findAll({
+            include:[{
+                model:Patient
+                }]
+            })
+        .then((result) => {
+            res.send(result);
+        }).catch((err) => {
+            if(err)
+                console.error("Unable to find rendez-vous ", err)
+        });
+}
 
-    if(!rdv_id){
-        res.status(400).send("ID is mandatory");
+const getRdv = function(req,res){
+    var rdvId = req.params.id;
+    Rdv
+        .findAll({
+            where : {
+                id : rdvId
+            },
+            include:[{
+                model : Patient
+            }]
+        })
+        .then((result) => {
+            res.send(result[0]);
+        }).catch((err) => {
+            if(err)
+                console.error("Unable to find rendez-vous ", err)
+        });
+}
+
+const updateRdv = function(req,res){
+    var rdvId = req.params.id,
+        rdv = {
+        date : req.body.date,
+        objet : req.body.objet,
+        patientId: req.body.patientId
     }
-
-    else{
-        var sql = `delete from  rdv where rdv_id = ?;`;
-        var values = [rdv_id];
-
-        db.serialize(function () {
-            db.run(sql, values, function (err) {
-                if (err){
-                    console.error(err);
-                    res.status(500).send(err);
+    Rdv
+        .update(rdv,
+            {
+                where: {
+                    id: rdvId
                 }
-                else
-                    res.send();
-            });
+            }
+        )
+        .then((result) => {
+            res.send(result);
+        }).catch((err) => {
+            if(err)
+                console.error("Unable to update rendez-vous ", err)
         });
-    }
 }
-/*function modifierRdvs(req, res, db){
-    for (var rdv of req.body) {
-        updateModifierRdv(rdv, res, db);
-    }
-}*/
 
-function modifierRdv(req, res, db){
-    // validateRequest(req, res);
-     updateModifierRdv(req.body, res, db);
- }
- 
- function checkIfExist(){
-     // mzl
- }
- 
- function updateModifierRdv(rdv, res, db){
-    // checkIfExist();
- 
-    var client_id = rdv.client_id;
-    var client_name = rdv.client_name;
-    var date = rdv.date;
-    var heure = rdv.heure;
-    var objet = rdv.objet;
-    var rdv_id = rdv.rdv_id;
- 
-     var sql = `update rdv
-             set client_id  = ?, client_name  = ?, date = ?, heure = ?, objet = ?
-             where rdv_id = ?;`;
- 
-     var values = [client_id, client_name , date, heure, objet, rdv_id];
- 
-     db.serialize(function () {
-         db.run(sql, values, function (err) {
-             if (err){
-                 console.error(err);
-                 res.status(500).send(err);
-             }
-             else
-                 res.send();
-         });
-     });
- }
- 
- /*function validateRequest(req, res) {
-     var fs = require('fs');
-     var schema = JSON.parse(fs.readFileSync('app/data/rdv_schema_update.json', 'utf8'));
- 
-     var JaySchema = require('jayschema');
-     var js = new JaySchema();
-     var instance = req.body;
- 
-     js.validate(instance, schema, function (errs) {
-         if (errs) {
-             console.error(errs);
-             res.status(400).send(errs);
-         }
-     });
- }*/
- 
- module.exports = {addRdv, addRdvs, deleteRdv, deleteRdvs, modifierRdv, modifierRdvs};
+
+const deleteRdv = function(req,res){
+    var rdvId = req.params.id;
+    Rdv
+        .destroy({
+            where : {
+                id : rdvId
+                }
+            })
+        .then((result) => {
+            res.send("Done")
+        }).catch((err) => {
+            if(err)
+                console.error("Unable to destroy rendez-vous ", err)
+        });
+}
+
+
+module.exports = {
+    addRdv,
+    getRdv,
+    getRdvs,
+    updateRdv,
+    deleteRdv
+}

@@ -18,16 +18,48 @@
         <table class="ui celled inverted table">
             <thead>
               <tr>
-                <th class="center aligned">Date</th>
-                <th class="center aligned">Heure</th>
+                <th class="center aligned">Date et heure</th>
                 <th class="center aligned">Objet</th>
                 <th class="center aligned">Opérations</th>
               </tr>
             </thead>
             <tbody>
+                <tr>
+                    <th class="center aligned">30/04/2020 12:30</th>
+                    <th class="center aligned">Prélèvement</th>
+                    <th class="center aligned">
+                        <button class="circular ui icon red aligned button">
+                            <i class="trash icon"></i>
+                        </button>
+                        <button class="circular ui icon primary aligned button edit">
+                            <i class="edit icon"></i>
+                        </button>
+                        <div class="ui modal edit">
+                            <div class="ui center aligned grey small header">
+                                Saisir les informations du rendez-vous
+                            </div>
+                            <div class="content">
+                                <form class="ui form">
+                                    <div class="field">
+                                    <label>Date et heure</label>
+                                    <input type="date" name="date">
+                                    </div>
+                                    <div class="field">
+                                        <label>Objet</label>
+                                        <input type="text" name="objet" placeholder="Objet">
+                                    </div>  
+                                    <div class="center aligned field">
+                                        <button class="ui green button" type="submit">
+                                            Modifier
+                                        </button>
+                                    </div>          
+                                </form>
+                            </div>
+                        </div>
+                    </th>
+                  </tr>
               <tr>
-                <th class="center aligned">30/04/2020</th>
-                <th class="center aligned">12:30</th>
+                <th class="center aligned">30/04/2020 12:30</th>
                 <th class="center aligned">Prélèvement</th>
                 <th class="center aligned">
                     <button class="circular ui icon red aligned button">
@@ -43,51 +75,8 @@
                         <div class="content">
                             <form class="ui form">
                                 <div class="field">
-                                <label>Date</label>
+                                <label>Date et heure</label>
                                 <input type="date" name="date">
-                                </div>
-                                <div class="field">
-                                <label>Heure</label>
-                                <input type="time" name="heure">
-                                </div>
-                                <div class="field">
-                                    <label>Objet</label>
-                                    <input type="text" name="objet" placeholder="Objet">
-                                </div>  
-                                <div class="center aligned field">
-                                    <button class="ui green button" type="submit">
-                                        Modifier
-                                    </button>
-                                </div>          
-                            </form>
-                        </div>
-                    </div>
-                </th>
-              </tr>
-              <tr>
-                <th class="center aligned">30/04/2020</th>
-                <th class="center aligned">12:30</th>
-                <th class="center aligned">Prélèvement</th>
-                <th class="center aligned">
-                    <button class="circular ui icon red aligned button">
-                        <i class="trash icon"></i>
-                    </button>
-                    <button class="circular ui icon primary aligned button edit">
-                        <i class="edit icon"></i>
-                    </button>
-                    <div class="ui modal edit">
-                        <div class="ui center aligned grey small header">
-                            Saisir les informations du rendez-vous
-                        </div>
-                        <div class="content">
-                            <form class="ui form">
-                                <div class="field">
-                                <label>Date</label>
-                                <input type="date" name="date">
-                                </div>
-                                <div class="field">
-                                <label>Heure</label>
-                                <input type="time" name="heure">
                                 </div>
                                 <div class="field">
                                     <label>Objet</label>
@@ -119,12 +108,8 @@
     <div class="content">
         <form class="ui form">
             <div class="field">
-              <label>Date</label>
-              <input type="date" name="date">
-            </div>
-            <div class="field">
-              <label>Heure</label>
-              <input type="time" name="heure">
+              <label>Date et heure</label>
+              <input type="datetime-local" name="date">
             </div>
             <div class="field">
                 <label>Objet</label>
